@@ -197,8 +197,10 @@ Consulte o arquivo **LICENSE** para detalhes.
 ## **Contato**
 
 Desenvolvido por **Werikson Frederiko**
+
 Doutorando em Ciência da Computação — UFV
+
 Laboratório NERo — Núcleo de Especialização em Robótica
 
-GitHub: [https://github.com/](https://github.com/WeriksonAlves)<WeriksonAlves>
+GitHub: [WeriksonAlves](https://github.com/WeriksonAlves)
 
