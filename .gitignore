@@ -1,4 +1,4 @@
-# ROS2 build artifacts
+# ROS2 build artifacts (fora do pacote, mas por segurança)
 build/
 install/
 log/
@@ -10,3 +10,12 @@ __pycache__/
 *.pyd
 *.egg-info/
 .venv/
+.venv_*/
+
+# Editor/OS
+*.swp
+*.swo
+.idea/
+.vscode/
+.DS_Store
+
