@@ -1,11 +1,35 @@
-# ROS2 build artifacts (fora do pacote, mas por segurança)
+# ROS 2 workspace build artifacts
 build/
 install/
 log/
 
-# Python
-__pycache__/
+# Python bytecode
 *.pyc
+__pycache__/
+
+# vscode / pycharm
+.vscode/
+.idea/
+
+# SVO and data
+*.svo
+*.bag
+*.db3
+
+# Experiment outputs
+*.json
+*.yaml
+*.txt
+*.npy
+*.npz
+/tmp/
+data/
+
+# Open3D caches
+*.ply
+*.pcd
+
+# Python
 *.pyo
 *.pyd
 *.egg-info/
@@ -18,4 +42,3 @@ __pycache__/
 .idea/
 .vscode/
 .DS_Store
-
