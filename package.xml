@@ -1,23 +1,31 @@
 <?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
   <name>zed2i_data_acquisition</name>
   <version>0.0.0</version>
   <description>ZED 2i point cloud acquisition and ros2 bag recording tools.</description>
 
-  <maintainer email="werikson.alves@ufv.br">Werikson Alves</maintainer>
+  <maintainer email="werikson.alves@ufv.br">Werikson</maintainer>
   <license>MIT</license>
 
+  <!-- Pacote Python: buildtool_depend = ament_python -->
   <buildtool_depend>ament_python</buildtool_depend>
 
-  <exec_depend>rclpy</exec_depend>
-  <exec_depend>sensor_msgs</exec_depend>
-  <exec_depend>std_msgs</exec_depend>
-  <exec_depend>sensor_msgs_py</exec_depend>
+  <!-- Dependências de execução -->
+  <depend>rclpy</depend>
+  <depend>sensor_msgs</depend>
+  <depend>std_msgs</depend>
+  <depend>sensor_msgs_py</depend>
 
-  <!-- Open3D não é dependência ROS, instala via pip -->
+  <!-- Dependências de teste (opcionais) -->
   <test_depend>ament_copyright</test_depend>
   <test_depend>ament_flake8</test_depend>
   <test_depend>ament_pep257</test_depend>
   <test_depend>python3-pytest</test_depend>
+
+  <export>
+    <!-- ESSENCIAL: diz ao colcon que o build_type é ament_python -->
+    <build_type>ament_python</build_type>
+  </export>
 </package>
 

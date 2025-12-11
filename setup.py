@@ -20,8 +20,6 @@ setup(
             f"share/{package_name}",
             [
                 "package.xml",
-                "README.md",
-                "LICENSE",
             ],
         ),
         # Launch files

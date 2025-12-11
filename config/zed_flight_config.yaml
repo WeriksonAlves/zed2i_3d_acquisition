@@ -10,11 +10,11 @@ zed2i_flight_acquisition:
     altitude_m: 12.0
 
     # Topics
-    point_cloud_topic: "/zed2i/zed_node/point_cloud/cloud_registered"
-    left_image_topic: "/zed2i/zed_node/left/image_rect_color"
+    point_cloud_topic: "/zed/zed_node/point_cloud/cloud_registered"
+    left_image_topic: "/zed/zed_node/left/image_rect_color"
 
     # Extra topics to be recorded in rosbag
     extra_topics:
       - "/tf"
-      - "/zed2i/zed_node/imu/data"
+      - "/zed/zed_node/imu/data"
 

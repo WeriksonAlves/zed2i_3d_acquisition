@@ -1,0 +1,21 @@
+zed2i_bench_visualization:
+  ros__parameters:
+    experiment_name: "bench_experiment"
+    base_output_dir: "/tmp/zed2i_bench_experiments"
+    
+    # ZED configuration
+    frame_rate: 15
+    depth_min: 0.5
+    depth_max: 20.0
+    altitude_m: 12.0
+
+    # Topics
+    point_cloud_topic: "/zed/zed_node/point_cloud/cloud_registered"
+    left_image_topic: "/zed/zed_node/left/image_rect_color"
+
+    # Extra topics: these are not used directly in the visualization,
+    # but we have prepared them in case you want to use them in the future.
+    extra_topics:  #  []
+      - "/tf"
+      - "/zed/zed_node/imu/data"
+

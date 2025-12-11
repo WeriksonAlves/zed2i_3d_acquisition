@@ -33,10 +33,10 @@ class ZedConfig:
     altitude_m: float = 12.0
 
     point_cloud_topic: str = (
-        "/zed2i/zed_node/point_cloud/cloud_registered"
+        "/zed/zed_node/point_cloud/cloud_registered"
     )
     left_image_topic: str = (
-        "/zed2i/zed_node/left/image_rect_color"
+        "/zed/zed_node/left/image_rect_color"
     )
 
     extra_topics: List[str] = field(default_factory=list)
