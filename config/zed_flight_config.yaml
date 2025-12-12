@@ -2,6 +2,7 @@ zed2i_flight_acquisition:
   ros__parameters:
     experiment_name: "flight_experiment"
     base_output_dir: "/tmp/zed2i_flight_experiments"
+    storage_id: "mcap"
 
     # ZED configuration
     frame_rate: 15

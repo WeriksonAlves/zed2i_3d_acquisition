@@ -9,8 +9,8 @@ class ZedFlightNode(Node):
     """
     Node responsible for ZED 2i flight acquisition.
 
-    It delegates the actual data handling and rosbag recording logic to
-    ZedPointCloudManager, keeping this node focused on ROS2 integration.
+    It delegates data handling and rosbag recording logic to ZedPointCloudManager,
+    keeping this node focused on ROS2 integration.
     """
 
     def __init__(self) -> None:
@@ -18,10 +18,8 @@ class ZedFlightNode(Node):
 
         self.get_logger().info("ZED 2i Flight Node initializing...")
 
-        # Load configuration from parameters
         self._config = ZedConfig.from_parameters(self)
 
-        # Declare and read general parameters
         self._experiment_name = self.declare_parameter(
             "experiment_name", "flight_experiment"
         ).value
@@ -30,7 +28,6 @@ class ZedFlightNode(Node):
             "base_output_dir", "/tmp/zed2i_flight_experiments"
         ).value
 
-        # Initialize the manager
         self._manager = ZedPointCloudManager(
             node=self,
             config=self._config,
@@ -43,13 +40,16 @@ class ZedFlightNode(Node):
 
         self.get_logger().info("ZED 2i Flight Node started.")
 
-    def destroy_node(self) -> bool:
+    def shutdown(self) -> None:
         """
-        Override destroy_node to ensure the manager is properly shutdown.
+        Perform a clean shutdown of the node resources.
+
+        This must be called before destroy_node() and before rclpy.shutdown().
         """
-        self.get_logger().info("Destroying ZED 2i Flight Node...")
+        if rclpy.ok():
+            self.get_logger().info("Shutting down ZED 2i Flight Node...")
+
         self._manager.shutdown()
-        return super().destroy_node()
 
 
 def main(args=None) -> None:
@@ -62,11 +62,20 @@ def main(args=None) -> None:
     try:
         rclpy.spin(node)
     except KeyboardInterrupt:
-        node.get_logger().info(
-            "Keyboard interrupt received, shutting down ZED Flight Node."
-        )
+        if rclpy.ok():
+            node.get_logger().info(
+                "Keyboard interrupt received, shutting down ZED Flight Node."
+            )
     finally:
+        # Cleanup while ROS context is still valid
+        try:
+            node.shutdown()
+        except Exception as exc:
+            # Avoid ROS logging here; context might be shutting down.
+            print(f"[zed2i_flight_acquisition] Shutdown error: {exc}")
+
         node.destroy_node()
+
         if rclpy.ok():
             rclpy.shutdown()
 

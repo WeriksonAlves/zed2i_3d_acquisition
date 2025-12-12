@@ -155,9 +155,10 @@ class ZedPointCloudManager:
         )
 
         self._rosbag_recorder = RosbagRecorder(
-            node=self._node,
-            base_output_dir=str(self._experiment_dir),
-        )
+	    node=self._node,
+	    base_output_dir=str(self._experiment_dir),
+	    storage_id=self._config.storage_id,
+	)
 
         topics: list[str] = [
             self._config.point_cloud_topic,

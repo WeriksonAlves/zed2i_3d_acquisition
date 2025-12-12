@@ -40,6 +40,7 @@ class ZedConfig:
     )
 
     extra_topics: List[str] = field(default_factory=list)
+    storage_id: str = "mcap"
 
     @classmethod
     def from_parameters(cls, node: "Node") -> "ZedConfig":
@@ -81,14 +82,21 @@ class ZedConfig:
 
         # Filter out empty strings, so the default effectively becomes [].
         extra_topics = [topic for topic in extra_topics_raw if topic]
+        
+        storage_id = node.declare_parameter(
+	    "storage_id", cls.storage_id
+	).value
+
 
         return cls(
-            frame_rate=frame_rate,
-            depth_min=depth_min,
-            depth_max=depth_max,
-            altitude_m=altitude_m,
-            point_cloud_topic=point_cloud_topic,
-            left_image_topic=left_image_topic,
-            extra_topics=extra_topics,
-        )
+	    frame_rate=frame_rate,
+	    depth_min=depth_min,
+	    depth_max=depth_max,
+	    altitude_m=altitude_m,
+	    point_cloud_topic=point_cloud_topic,
+	    left_image_topic=left_image_topic,
+	    extra_topics=extra_topics,
+	    storage_id=storage_id,
+	)
+
 
