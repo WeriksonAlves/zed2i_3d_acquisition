@@ -9,8 +9,8 @@ class ZedFlightNode(Node):
     """
     Node responsible for ZED 2i flight acquisition.
 
-    It delegates data handling and rosbag recording logic to ZedPointCloudManager,
-    keeping this node focused on ROS2 integration.
+    It delegates data handling and rosbag recording logic to
+    ZedPointCloudManager, keeping this node focused on ROS2 integration.
     """
 
     def __init__(self) -> None:
@@ -82,4 +82,3 @@ def main(args=None) -> None:
 
 if __name__ == "__main__":
     main()
-
