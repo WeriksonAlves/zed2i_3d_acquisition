@@ -283,5 +283,3 @@ def show_pointcloud_open3d(
     # This will block until the window is closed by the user
     vis.run()
     vis.destroy_window()
-
-
