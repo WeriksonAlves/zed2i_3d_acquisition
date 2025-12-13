@@ -1,7 +1,7 @@
 import json
 import datetime
 
-from typing import Optional, List
+from typing import Optional
 
 from rclpy.node import Node
 from sensor_msgs.msg import PointCloud2, Image
@@ -39,9 +39,11 @@ class ZedPointCloudManager:
 
         self._point_cloud_subscription = None
         self._left_image_subscription = None
+        self._right_image_subscription = None
 
         self._latest_point_cloud: Optional[PointCloud2] = None
         self._latest_left_image: Optional[Image] = None
+        self._latest_right_image: Optional[Image] = None
 
     def initialize_subscriptions(self) -> None:
         """
@@ -63,6 +65,13 @@ class ZedPointCloudManager:
             10,
         )
 
+        self._right_image_subscription = self._node.create_subscription(
+            Image,
+            self._config.right_image_topic,
+            self._right_image_callback,
+            10,
+        )
+
     def _point_cloud_callback(self, msg: PointCloud2) -> None:
         """
         Store the latest point cloud message.
@@ -74,7 +83,13 @@ class ZedPointCloudManager:
         Store the latest left image frame.
         """
         self._latest_left_image = msg
-    
+
+    def _right_image_callback(self, msg: Image) -> None:
+        """
+        Store the latest right image frame.
+        """
+        self._latest_right_image = msg
+
     def _write_experiment_metadata(
         self,
         experiment_name: str,
@@ -155,14 +170,15 @@ class ZedPointCloudManager:
         )
 
         self._rosbag_recorder = RosbagRecorder(
-	    node=self._node,
-	    base_output_dir=str(self._experiment_dir),
-	    storage_id=self._config.storage_id,
-	)
+            node=self._node,
+            base_output_dir=str(self._experiment_dir),
+            storage_id=self._config.storage_id,
+        )
 
         topics: list[str] = [
             self._config.point_cloud_topic,
             self._config.left_image_topic,
+            self._config.right_image_topic,
         ] + list(self._config.extra_topics)
 
         # Write metadata before starting recording
@@ -203,6 +219,7 @@ class ZedPointCloudManager:
         # the node is destroyed, so there is no need to unregister them here.
         self._point_cloud_subscription = None
         self._left_image_subscription = None
+        self._right_image_subscription = None
 
     # Placeholder for future bench visualization loop
     def run_bench_visualization_loop(self) -> None:
