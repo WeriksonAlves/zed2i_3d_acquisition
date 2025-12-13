@@ -43,7 +43,9 @@ def generate_launch_description() -> LaunchDescription:
         parameters=[
             config_file,
             {
-                "experiment_name": ParameterValue(experiment_name, value_type=str),
+                "experiment_name": ParameterValue(
+                    experiment_name, value_type=str
+                ),
                 "base_output_dir": ParameterValue(
                     base_output_dir, value_type=str
                 ),
