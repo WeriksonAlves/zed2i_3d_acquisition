@@ -35,12 +35,13 @@ class RosbagRecorder:
         self._lock = threading.Lock()
         self._current_bag_dir: Optional[pathlib.Path] = None
 
-    def start_recording(self, bag_name: str, topics: List[str]) -> pathlib.Path:
+    def start_recording(self, bag_name: str, topics: List[str]
+                        ) -> pathlib.Path:
         """
         Start recording the specified topics into a bag directory.
 
-        `ros2 bag record -o <bag_name> ...` creates a directory named <bag_name>
-        inside the current working directory (cwd).
+        `ros2 bag record -o <bag_name> ...` creates a directory named
+        <bag_name> inside the current working directory (cwd).
 
         :param bag_name: Bag output directory name.
         :param topics: List of ROS topic names to record.
@@ -78,7 +79,8 @@ class RosbagRecorder:
                 f"with command: {' '.join(cmd)}"
             )
 
-            # Use PIPE only if you plan to read output; otherwise inherit stdout/stderr
+            # Use PIPE only if you plan to read output; otherwise inherit
+            # stdout/stderr
             self._process = subprocess.Popen(
                 cmd,
                 cwd=str(self._base_output_dir),
@@ -90,7 +92,8 @@ class RosbagRecorder:
         """
         Stop the recording subprocess if it is running.
 
-        Uses SIGINT to mimic Ctrl+C, which is the clean shutdown path for rosbag2.
+        Uses SIGINT to mimic Ctrl+C, which is the clean shutdown path for
+        rosbag2.
         """
         with self._lock:
             if self._process is None:
@@ -100,7 +103,9 @@ class RosbagRecorder:
                 )
                 return
 
-            self._node.get_logger().info("Stopping ros2 bag recording process...")
+            self._node.get_logger().info(
+                "Stopping ros2 bag recording process..."
+            )
 
             # Prefer SIGINT for clean rosbag shutdown
             try:
@@ -126,4 +131,3 @@ class RosbagRecorder:
         Get the directory of the bag currently being recorded.
         """
         return self._current_bag_dir
-
