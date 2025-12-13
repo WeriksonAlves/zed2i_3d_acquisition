@@ -12,6 +12,7 @@ class AcquisitionMode(Enum):
     """
     FLIGHT = "flight"
     BENCH = "bench"
+    RECONSTRUCTION = "reconstruction"
 
 
 @dataclass
@@ -30,13 +31,16 @@ class ZedConfig:
     vertical_fov_deg: float = 70.0
     ideal_distance_m: float = 12.0
     max_distance_m: float = 20.0
-    altitude_m: float = 12.0
+    altitude_m: float = 1.0
 
     point_cloud_topic: str = (
         "/zed/zed_node/point_cloud/cloud_registered"
     )
     left_image_topic: str = (
         "/zed/zed_node/left/image_rect_color"
+    )
+    right_image_topic: str = (
+        "/zed/zed_node/right/image_rect_color"
     )
 
     extra_topics: List[str] = field(default_factory=list)
@@ -70,6 +74,9 @@ class ZedConfig:
         left_image_topic = node.declare_parameter(
             "left_image_topic", cls.left_image_topic
         ).value
+        right_image_topic = node.declare_parameter(
+            "right_image_topic", cls.right_image_topic
+        ).value
 
         # Use a non-empty default string array to avoid BYTE_ARRAY inference.
         # The YAML file will override this with a proper string array.
@@ -82,21 +89,19 @@ class ZedConfig:
 
         # Filter out empty strings, so the default effectively becomes [].
         extra_topics = [topic for topic in extra_topics_raw if topic]
-        
-        storage_id = node.declare_parameter(
-	    "storage_id", cls.storage_id
-	).value
 
+        storage_id = node.declare_parameter(
+            "storage_id", cls.storage_id
+        ).value
 
         return cls(
-	    frame_rate=frame_rate,
-	    depth_min=depth_min,
-	    depth_max=depth_max,
-	    altitude_m=altitude_m,
-	    point_cloud_topic=point_cloud_topic,
-	    left_image_topic=left_image_topic,
-	    extra_topics=extra_topics,
-	    storage_id=storage_id,
-	)
-
-
+            frame_rate=frame_rate,
+            depth_min=depth_min,
+            depth_max=depth_max,
+            altitude_m=altitude_m,
+            point_cloud_topic=point_cloud_topic,
+            left_image_topic=left_image_topic,
+            right_image_topic=right_image_topic,
+            extra_topics=extra_topics,
+            storage_id=storage_id,
+        )
