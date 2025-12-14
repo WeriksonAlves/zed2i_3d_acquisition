@@ -202,7 +202,8 @@ class ZedPointCloudManager:
         """
         if self._rosbag_recorder is None:
             self._node.get_logger().warn(
-                "stop_recording() called but RosbagRecorder is not initialized."
+                "stop_recording() called but "
+                "RosbagRecorder is not initialized."
             )
             return
 
